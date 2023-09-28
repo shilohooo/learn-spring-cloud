@@ -1,0 +1,28 @@
+server:
+  port: 9001
+
+eureka:
+  client:
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+    # 服务消费者客户端需要去检索服务
+    fetch-registry: true
+
+ribbon:
+  # 由于 OpenFeign 集成了 Ribbon ，其服务调用以及负载均衡在底层都是依靠 Ribbon 实现的，
+  # 因此 OpenFeign 超时控制也是通过 Ribbon 来实现的。
+  # 配置 Ribbon 建立连接所用的时间，适用于网络状况正常的情况下，两端连接所用的时间，单位：毫秒
+  ReadTimeout: 6000
+  # 建立连接后，服务器读取到可用资源的时间，单位：毫秒
+  ConnectionTimeout: 6000
+
+
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+logging:
+  level:
+    # 配置 OpenFeign 接口日志级别
+    org.shiloh.service.DeptFeignService: debug

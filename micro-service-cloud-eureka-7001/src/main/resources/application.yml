@@ -1,0 +1,26 @@
+server:
+  port: 7001
+
+# Eureka 配置
+eureka:
+  instance:
+    # Eureka 服务端实例名称
+    hostname: eureka7001.com
+
+
+  client:
+    # 是否将自己注册到 Eureka 服务端
+    register-with-eureka: false
+    # 是否从 Eureka 服务端获取注册信息，false 表示自己就是注册中心，不需要从注册中心获取服务，而是负责维护服务实例
+    fetch-registry: false
+    service-url:
+      # 单机版服务注册中心配置
+      # defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      # 集群版服务注册中心配置，将当前的 Eureka Server 注册到 7002 和 7003 上，形成一组互相注册的 Eureka Server 集群
+      defaultZone: http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+
+  server:
+    # 关闭自我保护机制，默认为开启
+    # 自我保护机制：某时刻某一个微服务不可用了，Eureka 不会立刻清理，依旧会对该微服务的信息进行保存
+    # 一般情况不建议修改，保持默认即可
+    enable-self-preservation: false

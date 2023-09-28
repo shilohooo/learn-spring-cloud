@@ -1,0 +1,71 @@
+server:
+  port: 8003
+
+spring:
+  application:
+    # 微服务名称，对外暴露的微服务名称，十分重要
+    name: MicroServiceCloudProvider
+
+  # 配置数据源
+  datasource:
+    url: jdbc:mysql://localhost:13306/micro_service_cloud_03?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+
+  # JPA 配置
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL57Dialect
+
+  # Jackson 配置
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      fail-on-empty-beans: false
+
+# Spring Cloud 自定义服务名称和 IP 地址
+eureka:
+  # 将客户端注册到 eureka 服务列表内
+  client:
+    service-url:
+      # 服务注册中心地址，这是服务注册中心在配置文件中暴露出来的注册地址
+      # 单机版服务注册中心配置
+      # defaultZone: http://localhost:7001/eureka
+      # 集群版服务注册中心配置，将服务注册到 Eureka Server 集群上
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+
+  instance:
+    # 自定义服务名称信息
+    instance-id: micro-service-cloud-provider-8003
+    # 显示访问路径的 IP 地址
+    prefer-ip-address: true
+
+# Actuator 监控配置
+management:
+  endpoints:
+    web:
+      exposure:
+        # 暴露所有端点
+        include: "*"
+info:
+  app.name: MicroServiceCloudProvider
+  company.name: shiloh.org
+  build.artifactId: @project.artifactId@
+  build.version: @project.version@
+
+# 日志相关配置
+logging:
+  level:
+    root: info
+    # 让 Hibernate 打印 SQL 参数
+    org.hibernate.type.descriptor.sql.BasicBinder: trace

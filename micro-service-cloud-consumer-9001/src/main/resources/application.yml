@@ -1,0 +1,17 @@
+server:
+  port: 9001
+
+eureka:
+  client:
+    # 服务消费者不需要注册到 Eureka 服务端
+    register-with-eureka: false
+    # 服务消费者需要从 Eureka 服务端获取注册信息
+    fetch-registry: true
+    service-url:
+      # 服务注册中心集群
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
